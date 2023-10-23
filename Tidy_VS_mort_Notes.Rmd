@@ -1,0 +1,35 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Purpose: To clean publicly available VS data in a format that matches how we group SUDORS data.
+Or how any sane person should group data. 
+
+To get VS mortality dataset to something that is organized at the county, age, sex race level, we have to do a bunch of dumb shit, or I should
+say that I have to do a bunch of dumb shit. Basically, raw data is in separate excel sheets for male and female. Right now, I do the following to get to a clean dataset:
+
+    1) Import sheets with F to denote female and M to denote Male for all available years - e.g. vs_2014_m
+    2) Apply tidy_vitalstats functions to each of these imported objects. This will get them to a point close to their lowest possible               groupings.
+    3) Apply drop_some_vars function to get rid of already summed variables. If I ever merge with other datsets, keeping these will cause lots        of problems because they will confuse any summations of data. (Stored in _clean objects - e.g. F_2018_clean)
+    4) Row bind cleaned contents into a finished cleaned dataset for the years 2014 - 2016 (de_mort_fin_early), 
+       and 2017 - 2020 (de_mort_fin). See below for why things are the way that they are
+       
+  
+  So there are myriad inefficiencies with this code, but imo, the biggest one is caused by the inclusion of a hispanic variable in the          2017-2020 data. I can't figure out how to generalize a function to work with both raw formats, so I end up copy pasting two separate
+  functions that deal with this difference separately. This is probasbly bad. There should be a way to like, create a vector with the           different lines of code, add a generalized parameter to the function, and substitute in these new vectors. Couldn't get it to work, but feel   like there's a way.
+  
+  Additional issue, I feel like there are several opportunities to employ loops. I know for a fact this can be done to simplify our initial     import. It can probably also be done to reduce redundancy in function calls.
+  
+  TO-DOs:
+  
+    1) Check against raw data to ensure that data is summing correctly. DONE
+    2) Explore looping to simplify as mentioned above
+    3) Write code for export
+    4) Start messing with exploratory data analyses - ggplot and the like
+    5) Take a look at other available tables and see if I can make some scripts for them too
+
+
+
+
+
